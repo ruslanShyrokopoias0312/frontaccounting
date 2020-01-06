@@ -4,3 +4,7 @@ config_db.php
 # System Files
 .DS_Store
 Thumbs.db
+
+# auto deploy 
+deploy.php
+deploy-log.txt
