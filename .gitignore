@@ -4,6 +4,9 @@ config_db.php
 # cache
 **/js_cache
 
+# tmp
+**/tmp
+
 # System Files
 .DS_Store
 Thumbs.db
