@@ -5,6 +5,6 @@ config_db.php
 .DS_Store
 Thumbs.db
 
-# auto deploy files
+# deploy files
 deploy.php
 deploy-log.txt
