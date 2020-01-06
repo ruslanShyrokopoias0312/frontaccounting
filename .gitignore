@@ -1,0 +1,7 @@
+# config
+config.php
+config_db.php
+
+# System Files
+.DS_Store
+Thumbs.db

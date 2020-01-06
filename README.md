@@ -1,0 +1,1 @@
+FrontAccounting (FA) is a professional web-based Accounting system for the entire ERP chain written in PHP, using MySQL.
