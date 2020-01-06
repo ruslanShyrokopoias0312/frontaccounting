@@ -1,5 +1,5 @@
 <?php
-/**********************************************************************
+/*********************************************************************
     Copyright (C) FrontAccounting, LLC.
 	Released under the terms of the GNU General Public License, GPL, 
 	as published by the Free Software Foundation, either version 3 
