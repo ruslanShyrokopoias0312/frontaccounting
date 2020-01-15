@@ -4,6 +4,9 @@ config_db.php
 # cache
 **/js_cache
 
+# company folder
+**/company
+! company/0
 # tmp
 **/tmp
 
