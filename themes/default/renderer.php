@@ -84,6 +84,7 @@
 				$limg = "<img src='$local_path_to_root/themes/".user_theme()."/images/lock.gif' style='width:14px;height:14px;border:0;vertical-align:middle;' alt='"._('Change Password')."'>&nbsp;&nbsp;";
 				$img = "<img src='$local_path_to_root/themes/".user_theme()."/images/login.gif' style='width:14px;height:14px;border:0;vertical-align:middle;' alt='"._('Logout')."'>&nbsp;&nbsp;";
 				$himg = "<img src='$local_path_to_root/themes/".user_theme()."/images/help.gif' style='width:14px;height:14px;border:0;vertical-align:middle;'' alt='"._('Help')."'>&nbsp;&nbsp;";
+				$pool_img = "<img src='$local_path_to_root/themes/".user_theme()."/images/gl.png' style='width:14px;height:14px;border:0;vertical-align:middle;'' alt='"._('Pool')."'>&nbsp;&nbsp;";
 				echo "<table class='logoutBar'>";
 				echo "<tr><td class='headingtext3'>" . $db_connections[user_company()]["name"] . " | " . $_SERVER['SERVER_NAME'] . " | " . $_SESSION["wa_current_user"]->name . "</td>";
 				echo "<td class='logoutBarRight'><img id='ajaxmark' src='$indicator' align='center' style='visibility:hidden;' alt='ajaxmark'></td>";
@@ -96,6 +97,9 @@
 				{
 					echo "<a target = '_blank' onclick=" .'"'."javascript:openWindow(this.href,this.target); return false;".'" '. "href='". help_url()."'>$himg" . _("Help") . "</a>&nbsp;&nbsp;&nbsp;";
 				}
+
+				echo "<a class='shortcut' href='#'>$pool_img" . _("Pool") . "</a>&nbsp;&nbsp;&nbsp;\n";
+
 				echo "<a class='shortcut' href='$local_path_to_root/access/logout.php?'>$img" . _("Logout") . "</a>&nbsp;&nbsp;&nbsp;";
 				echo "</td></tr><tr><td colspan=3>";
 				echo "</td></tr></table>";
