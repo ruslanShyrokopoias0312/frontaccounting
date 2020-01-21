@@ -35,6 +35,7 @@
 		function menu_header($title, $no_menu, $is_index)
 		{
 			global $path_to_root, $SysPrefs, $db_connections;
+			
 			echo "<table class='callout_main' border='0' cellpadding='0' cellspacing='0'>\n";
 			echo "<tr>\n";
 			echo "<td colspan='2' rowspan='2'>\n";
@@ -45,6 +46,16 @@
 			echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>\n";
 			echo "<tr>\n";
 			echo "<td class='quick_menu'>\n"; // tabs
+
+			if (!$no_menu)
+			{
+				echo "<table cellpadding='0' cellspacing='0' width='100%'><tr><td>";
+				echo "<div class='tabs'>";
+				echo "<a class='menu_tab' href='#'>Cooperative</a>";
+				echo "<a class='menu_tab' href='#'>ERP</a>";
+				echo "</div>";
+				echo "</td></tr></table>";
+			}
 
 			$indicator = "$path_to_root/themes/".user_theme(). "/images/ajax-loader.gif";
 			if (!$no_menu)
@@ -66,6 +77,7 @@
 				}
 				echo "</div>";
 				echo "</td></tr></table>";
+				
 				// top status bar
 				$rimg = "<img src='$path_to_root/themes/".user_theme()."/images/report.png' style='width:14px;height:14px;border:0;vertical-align:middle;' alt='"._('Dashboard')."'>&nbsp;&nbsp;";
 				$pimg = "<img src='$local_path_to_root/themes/".user_theme()."/images/preferences.gif' style='width:14px;height:14px; border:0;vertical-align:middle;' alt='"._('Preferences')."'>&nbsp;&nbsp;";
@@ -153,7 +165,7 @@
 		{
 			global $path_to_root;
 
-			$selected_app = $waapp->get_selected_application();
+			$selected_app = $waapp->get_selected_application(); 
 			if (!$_SESSION["wa_current_user"]->check_application_access($selected_app))
 				return;
 

@@ -498,33 +498,33 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 
 	if (!$_SESSION["wa_current_user"]->logged_in())
 	{
-      if (@$SysPrefs->allow_password_reset && !$SysPrefs->allow_demo_mode
-        && (isset($_GET['reset']) || isset($_POST['email_entry_field']))) {
-		  if (!isset($_POST["email_entry_field"])) {
-        include($path_to_root . "/access/password_reset.php");
-        exit();
-      }
-      else {
-        if (isset($_POST["company_login_nickname"]) && !isset($_POST["company_login_name"])) {
-          for ($i = 0; $i < count($db_connections); $i++) {
-            if ($db_connections[$i]["name"] == $_POST["company_login_nickname"]) {
-              $_POST["company_login_name"] = $i;
-              unset($_POST["company_login_nickname"]);
-              break 1; // cannot pass variables to break from PHP v5.4 onwards
-            }
-          }
-        }
-        $_succeed = isset($db_connections[$_POST["company_login_name"]]) &&
-          $_SESSION["wa_current_user"]->reset_password($_POST["company_login_name"],
-          $_POST["email_entry_field"]);
-        if ($_succeed)
-        {
-          password_reset_success();
-        }
+	  	if (@$SysPrefs->allow_password_reset && !$SysPrefs->allow_demo_mode && (isset($_GET['reset']) || isset($_POST['email_entry_field']))) 
+	  	{
+			if (!isset($_POST["email_entry_field"])) {
+				include($path_to_root . "/access/password_reset.php");
+				exit();
+			}
+			else {
+				if (isset($_POST["company_login_nickname"]) && !isset($_POST["company_login_name"])) {
+				for ($i = 0; $i < count($db_connections); $i++) {
+					if ($db_connections[$i]["name"] == $_POST["company_login_nickname"]) {
+					$_POST["company_login_name"] = $i;
+					unset($_POST["company_login_nickname"]);
+					break 1; // cannot pass variables to break from PHP v5.4 onwards
+					}
+				}
+				}
+				$_succeed = isset($db_connections[$_POST["company_login_name"]]) &&
+				$_SESSION["wa_current_user"]->reset_password($_POST["company_login_name"],
+				$_POST["email_entry_field"]);
+				if ($_succeed)
+				{
+				password_reset_success();
+				}
 
-        password_reset_fail();
-      }
-    }
+				password_reset_fail();
+			}
+		}
 		// Show login screen
 		if (!isset($_POST["user_name_entry_field"]) or $_POST["user_name_entry_field"] == "")
 		{
@@ -569,7 +569,7 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 			$lang->set_language($_SESSION['language']->code);
 		}
 	} else
-	{
+	{ 
 		set_global_connection();
 
 		if (db_fixed())
