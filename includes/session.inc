@@ -534,6 +534,7 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 				'post' => $_POST);
 
 			include($path_to_root . "/access/login.php");
+			//include($path_to_root . "/pool/setup.php");
 			if (in_ajax())
 				$Ajax->activate('_page_body');
 			exit;

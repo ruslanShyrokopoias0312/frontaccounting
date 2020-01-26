@@ -90,7 +90,7 @@ function defaultCompany()
 		table_section_title(_("Version")." $version   Build ".$SysPrefs->build_version." - "._("Login"));
 	$value = $login_timeout ? $_SESSION['wa_current_user']->loginname : ($SysPrefs->allow_demo_mode ? "demouser":"");
 
-	text_row(_("User name"), "user_name_entry_field", $value, 20, 30);
+	text_row(_("User name:"), "user_name_entry_field", $value, 20, 30);
 
 	$password = $SysPrefs->allow_demo_mode ? "password":"";
 
@@ -103,7 +103,7 @@ function defaultCompany()
 		if (!isset($coy))
 			$coy = $def_coy;
 		if (!@$SysPrefs->text_company_selection) {
-			echo "<tr><td>"._("Company")."</td><td><select name='company_login_name'>\n";
+			echo "<tr><td>"._("Pool:")."</td><td><select name='company_login_name'>\n";
 			for ($i = 0; $i < count($db_connections); $i++)
 				echo "<option value=$i ".($i==$coy ? 'selected':'') .">" . $db_connections[$i]["name"] . "</option>";
 			echo "</select>\n";

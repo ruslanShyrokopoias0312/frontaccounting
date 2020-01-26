@@ -63,7 +63,7 @@ class setup_app extends application
 
 		$this->add_rapp_function(2, _("&Backup and Restore"),
 			"admin/backups.php?", 'SA_BACKUP', MENU_SYSTEM);
-		$this->add_rapp_function(2, _("Create/Update &Companies"),
+		$this->add_rapp_function(2, _("Create/Update &Pools"),
 			"admin/create_coy.php?", 'SA_CREATECOMPANY', MENU_UPDATE);
 		$this->add_rapp_function(2, _("Install/Update &Languages"),
 			"admin/inst_lang.php?", 'SA_CREATELANGUAGE', MENU_UPDATE);
