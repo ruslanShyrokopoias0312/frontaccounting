@@ -52,7 +52,7 @@
 				echo "<table cellpadding='0' cellspacing='0' width='100%'><tr><td>";
 				echo "<div class='tabs'>";
 				echo "<a class='menu_tab' href='#'>Cooperative</a>";
-				echo "<a class='menu_tab' href='#'>ERP</a>";
+				echo "<a class='selected' href='#'>ERP</a>";
 				echo "</div>";
 				echo "</td></tr></table>";
 			}
@@ -84,6 +84,7 @@
 				$limg = "<img src='$local_path_to_root/themes/".user_theme()."/images/lock.gif' style='width:14px;height:14px;border:0;vertical-align:middle;' alt='"._('Change Password')."'>&nbsp;&nbsp;";
 				$img = "<img src='$local_path_to_root/themes/".user_theme()."/images/login.gif' style='width:14px;height:14px;border:0;vertical-align:middle;' alt='"._('Logout')."'>&nbsp;&nbsp;";
 				$himg = "<img src='$local_path_to_root/themes/".user_theme()."/images/help.gif' style='width:14px;height:14px;border:0;vertical-align:middle;'' alt='"._('Help')."'>&nbsp;&nbsp;";
+				$pool_img = "<img src='$local_path_to_root/themes/".user_theme()."/images/menu_system.png' style='width:14px;height:14px;border:0;vertical-align:middle;'' alt='"._('Pool Setup')."'>&nbsp;&nbsp;";
 				
 				echo "<table class='logoutBar'>";
 				echo "<tr><td class='headingtext3'>" . $db_connections[user_company()]["name"] . " | " . $_SERVER['SERVER_NAME'] . " | " . $_SESSION["wa_current_user"]->name . "</td>";
@@ -98,6 +99,7 @@
 					echo "<a target = '_blank' onclick=" .'"'."javascript:openWindow(this.href,this.target); return false;".'" '. "href='". help_url()."'>$himg" . _("Help") . "</a>&nbsp;&nbsp;&nbsp;";
 				}
 
+				echo "<a class='shortcut' href='$path_to_root/pool/pool-setup.php?'>$pool_img" . _("Pool Setup") . "</a>&nbsp;&nbsp;&nbsp;\n";
 				echo "<a class='shortcut' href='$local_path_to_root/access/logout.php?'>$img" . _("Logout") . "</a>&nbsp;&nbsp;&nbsp;";
 				echo "</td></tr><tr><td colspan=3>";
 				echo "</td></tr></table>";

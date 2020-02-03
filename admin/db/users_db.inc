@@ -126,8 +126,12 @@ function delete_user($id)
 
 function get_user_auth($user_id, $password)
 {
+	$users_table = "(SELECT a.id, a.user_id, a.`password`, a.real_name, a.role_id, a.phone, a.email, b.`language`, b.date_format, b.date_sep, b.tho_sep, b.dec_sep, b.theme, b.page_size, b.prices_dec, b.qty_dec, b.rates_dec, b.percent_dec, b.show_gl, b.show_codes, b.show_hints, b.last_visit_date, b.query_size, b.graphic_links, b.pos, b.print_profile, b.rep_popup, b.sticky_doc_date, b.startup_tab, b.transaction_days, b.save_report_selections, b.use_date_picker, b.def_print_destination, b.def_print_orientation, b.inactive  
+            FROM 00_users AS a
+            INNER JOIN ".TB_PREF."users AS b ON a.id=b.u_id) AS users";
+	$users_table = "00_users";
 
-	$sql = "SELECT * FROM ".TB_PREF."users WHERE user_id = ".db_escape($user_id)." AND"
+	$sql = "SELECT * FROM ".$users_table." WHERE user_id = ".db_escape($user_id)." AND"
 		." password=".db_escape($password);
 
 	return db_num_rows(db_query($sql, "could not get validate user login for $user_id")) != 0;

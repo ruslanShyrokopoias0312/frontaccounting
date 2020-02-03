@@ -61,7 +61,7 @@ class current_user
 	{
 		global $security_areas, $security_groups, $security_headings, $path_to_root, $dflt_lang, $SysPrefs;
 
-		$this->set_company($company);
+		//$this->set_company($company);
 	    $this->logged = false;
 
 		set_global_connection($company);

@@ -68,7 +68,8 @@ function defaultCompany()
 	}
 	echo "</head>\n";
 
-	echo "<body id='loginscreen' $onload>\n";
+	//echo "<body id='loginscreen' $onload>\n";
+	echo "<body id='loginscreen'>\n";
 
 	echo "<table class='titletext'><tr><td>$title</td></tr></table>\n";
 	
@@ -102,15 +103,15 @@ function defaultCompany()
 		$coy =  user_company();
 		if (!isset($coy))
 			$coy = $def_coy;
-		if (!@$SysPrefs->text_company_selection) {
-			echo "<tr><td>"._("Pool:")."</td><td><select name='company_login_name'>\n";
-			for ($i = 0; $i < count($db_connections); $i++)
-				echo "<option value=$i ".($i==$coy ? 'selected':'') .">" . $db_connections[$i]["name"] . "</option>";
-			echo "</select>\n";
-			echo "</td></tr>";
-		} else {
-			text_row(_("Company"), "company_login_nickname", "", 20, 50);
-		}
+		// if (!@$SysPrefs->text_company_selection) {
+		// 	echo "<tr><td>"._("Pool:")."</td><td><select name='company_login_name'>\n";
+		// 	for ($i = 0; $i < count($db_connections); $i++)
+		// 		echo "<option value=$i ".($i==$coy ? 'selected':'') .">" . $db_connections[$i]["name"] . "</option>";
+		// 	echo "</select>\n";
+		// 	echo "</td></tr>";
+		// } else {
+		// 	text_row(_("Company"), "company_login_nickname", "", 20, 50);
+		// }
 		start_row();
 		label_cell($demo_text, "colspan=2 align='center' id='log_msg'");
 		end_row();

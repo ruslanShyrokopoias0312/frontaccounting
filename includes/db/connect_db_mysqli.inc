@@ -23,9 +23,12 @@ function set_global_connection($company=-1)
 	if ($company == -1) 
 		$company = user_company();
 
+	if ($company == NULL) 
+		$company = user_company();
+
 	cancel_transaction(); // cancel all aborted transactions (if any)
 
-	$_SESSION["wa_current_user"]->cur_con = $company;
+	//$_SESSION["wa_current_user"]->cur_con = $company;
 
 	$connection = $db_connections[$company];
 

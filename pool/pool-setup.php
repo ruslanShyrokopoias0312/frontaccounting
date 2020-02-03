@@ -10,7 +10,7 @@
     See the License here <http://www.gnu.org/licenses/gpl-3.0.html>.
 ***********************************************************************/
 $page_security = 'SA_CREATECOMPANY';
-$path_to_root=".";
+$path_to_root="..";
 include_once($path_to_root . "/includes/session.inc");
 
 include_once($path_to_root . "/includes/date_functions.inc");
@@ -26,6 +26,7 @@ simple_page_mode(true);
 	FIXME: tb_pref_counter should track prefix per database.
 */
 //---------------------------------------------------------------------------------------------
+
 function check_data($selected_id)
 {
 	global $db_connections, $tb_pref_counter;
@@ -243,7 +244,7 @@ function display_companies()
 
 	start_table(TABLESTYLE);
 
-	$th = array(_("Company"), _("Database Host"), _("Database Port"), _("Database User"),
+	$th = array(_("Pool"), _("Database Host"), _("Database Port"), _("Database User"),
 		_("Database Name"), _("Table Pref"), _("Charset"), _("Default"), "", "", "");
 	table_header($th);
 
@@ -274,12 +275,12 @@ function display_companies()
 					$conn[$i]['name']));
 	 	} else
 			 label_cell('');
-		echo '<td align="center"><button type="submit" class="editbutton" name="show" value="'.$i.'" title="Show"><img src="./themes/default/images/invoice.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>';
+		echo '<td align="center" style="min-width:50px"><button type="submit" class="editbutton" name="company_index" value="'.$i.'" title="Show"><img src="../themes/default/images/invoice.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>';
 		end_row();
 	}
 
 	end_table();
-    display_note(_("The marked company is the current company which cannot be deleted."), 0, 0, "class='currentfg'");
+    display_note(_("The marked pool is the current pool which cannot be deleted."), 0, 0, "class='currentfg'");
     display_note(_("If no Admin Password is entered, the new Admin Password will be '<b>password</b>' by default "));
     display_note(_("Set Only Port value if you cannot use the default port 3306."));
 }
@@ -324,7 +325,7 @@ function display_company_edit($selected_id)
 		unset($_POST['def']);
 	}
 
-	text_row_ex(_("Company"), 'name', 50);
+	text_row_ex(_("Pool"), 'name', 50);
 
 	if ($selected_id == -1)
 	{
@@ -335,7 +336,7 @@ function display_company_edit($selected_id)
 		text_row_ex(_("Database Name"), 'dbname', 30);
 		collations_list_row(_("Database Collation:"), 'collation');
 		yesno_list_row(_("Table Pref"), 'tbpref', 1, $_POST['tbpref'], _("None"), false);
-		check_row(_("Default Company"), 'def');
+		check_row(_("Default Pool"), 'def');
 		coa_list_row(_("Database Script"), 'coa');
 		text_row_ex(_("New script Admin Password"), 'admpassword', 20);
 	} else {
@@ -346,13 +347,12 @@ function display_company_edit($selected_id)
 		collations_list_row(_("Database Collation:"), 'collation');
 		label_row(_("Table Pref"), $_POST['tbpref']);
 		if (!get_post('def'))
-			check_row(_("Default Company"), 'def');
+			check_row(_("Default Pool"), 'def');
 		else
-			label_row(_("Default Company"), _("Yes"));
+			label_row(_("Default Pool"), _("Yes"));
 	}
 
 	end_table(1);
-	hidden('selected_id', $selected_id);
 }
 
 //---------------------------------------------------------------------------------------------
@@ -369,11 +369,136 @@ if ($Mode == 'RESET')
 	unset($_POST);
 }
 
+/*
+	pool type section.
+*/
+//---------------------------------------------------------------------------------------------
+
+function display_pool_type()
+{
+	$selectedPoolType_id = 10;
+
+	start_table(TABLESTYLE);
+
+	$th = array(_("No"), _("Pool Type"), "Edit", "Delete", "Show");
+	table_header($th);
+
+	$k=0;
+	
+	// Begin getting Pool Type list from db
+	$sql = "SELECT * FROM 00_pool_type";	
+	$result = db_query($sql, "could not get Pool Type");
+	$poolType_list = db_fetch_assoc($result);
+
+	// $poolType_list = [
+	// 	[
+	// 		'id'=>1,
+	// 		'pool_type'=>'Equipment'
+	// 	],
+	// 	[
+	// 		'id'=>2,
+	// 		'pool_type'=>'Manufacturing'
+	// 	],
+	// 	[
+	// 		'id'=>3,
+	// 		'pool_type'=>'tables'
+	// 	],
+	// 	[
+	// 		'id'=>4,
+	// 		'pool_type'=>'chairs'
+	// 	]
+	// ];
+	// End getting Pool Type list from db
+
+	while($poolType_row = db_fetch_assoc($result)) {
+        if ($poolType_row['id'] == $selectedPoolType_id)
+    		start_row("class='stockmankobg'");
+    	else
+    		alt_table_row_color($k);
+
+		label_cell($i + 1);
+		label_cell($poolType_row['pool_type']);
+		echo '<td align="center" ><button type="submit" class="editbutton" name="edit_pool_type_id" value="'.$poolType_row['id'].'" title="Edit"><img src="../themes/default/images/edit.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>';
+		echo '<td align="center" ><button type="submit" class="editbutton" name="delete_pool_type_id" value="'.$poolType_row['id'].'" title="Show"><img src="../themes/default/images/delete.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>';
+		echo '<td align="center" style="min-width:50px"><button type="submit" class="editbutton" name="pool_type_show" value="'.$poolType_row['id'].'" title="Show"><img src="../themes/default/images/invoice.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>';
+		end_row();
+    }
+
+	end_table();
+    
+}
+
+//---------------------------------------------------------------------------------------------
+
+function display_pool_type_edit($edit_pool_type_id)
+{
+	start_table(TABLESTYLE2);
+
+	if (!isset($edit_pool_type_id))
+	{	
+		$_POST['add_pool_type'] = "";
+		text_row_ex(_("Pool Type :"), 'add_pool_type', 20, 20);	
+	}
+	else
+	{
+		$sql = "SELECT pool_type FROM 00_pool_type WHERE id=".db_escape($edit_pool_type_id);
+		$result = db_query($sql, "could not get pool type $id");
+		$selected_pool_type_row = db_fetch($result);
+
+		$_POST['add_pool_type'] = "";
+		$_POST['update_pool_type'] = "";
+		if ($selected_pool_type_row) {
+			text_row_ex(_("Pool Type :"), 'update_pool_type', 20, 20, null, $selected_pool_type_row['pool_type']);
+			hidden('update_pool_type_id', $edit_pool_type_id);
+		} else {
+			text_row_ex(_("Pool Type :"), 'add_pool_type', 20, 20);
+		}
+
+	}
+	end_table(1);
+	
+	echo'<br>';
+	if (!isset($edit_pool_type_id))
+	{
+		echo '<center><button class="inputsubmit" type="submit"  name="" value=""><img src="../themes/default/images/ok.gif" height="12" alt=""><span>Add new</span></button>
+		</center>';
+	}
+	else
+	{
+		echo '<center><button class="inputsubmit" type="submit"  name="" id="" value="" title="Submit changes"><img src="../themes/default/images/ok.gif" height="12" alt=""><span>Update</span></button>
+		<button class="ajaxsubmit" type="submit" name="" value="" title="Cancel edition"><img src="../themes/default/images/escape.png" height="12" alt=""><span>Cancel</span></button>
+		</center>';
+
+	}
+	
+}
+
+//---------------------------------------------------------------------------------------------
+
+if ( isset($_POST['add_pool_type']) && trim($_POST['add_pool_type'])!=''  ) {
+	$sql = "INSERT 00_pool_type (pool_type) VALUES (".db_escape($_POST['add_pool_type']).")";
+	db_query($sql, "could not add pool type");
+}
+
+if ( isset($_POST['update_pool_type']) && trim($_POST['update_pool_type'])!=''  ) {
+
+	if (isset($_POST['update_pool_type_id'])) {
+		$sql = "UPDATE 00_pool_type SET pool_type=".db_escape($_POST['update_pool_type'])." WHERE id=".$_POST['update_pool_type_id'];
+		db_query($sql, "could not update pool type for ".$_POST['update_pool_type_id']);
+	}
+}
+
+if ( isset($_POST['delete_pool_type_id']) ) {
+	$sql = "DELETE FROM 00_pool_type WHERE id=".$_POST['delete_pool_type_id'];
+	db_query($sql, "could not delete pool type for ".$_POST['delete_pool_type_id']);
+}
+
+
+
 //---------------------------------------------------------------------------------------------
 	
-$def_theme = "default";
-echo "<link href='$path_to_root/themes/$def_theme/default.css' rel='stylesheet' type='text/css'> \n";
-send_scripts();
+echo "<link href='$path_to_root/themes/default/default.css' rel='stylesheet' type='text/css'> \n";
+//send_scripts();
 echo "<body>\n";
 	echo '<table class="callout_main" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="2" rowspan="2">';
 
@@ -382,25 +507,21 @@ echo "<body>\n";
 					<tbody>
 						<tr>
 							<td class="quick_menu">
-								<table cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td>
-									<div class="tabs" style="height:18.4px">
-									</div>
-								</td></tr></tbody></table>
 								<table cellpadding="0" cellspacing="0" width="100%">
 									<tbody><tr><td>
 										<div class="tabs" style="height:18.4px">
+											<a class="selected" href="./pool-setup.php"><u>P</u>ool Setup</a>
+											<a class="menu_tab" href="./user-setup.php"><u>U</u>ser Setup</a>
 										</div>
 									</td></tr></tbody>
 								</table>
 								<table class="logoutBar">
 									<tbody>
 										<tr>
-											<td class="logoutBarRight"><img id="ajaxmark" src="./themes/default/images/progressbar.gif" align="center" style="visibility: hidden;" alt="ajaxmark"></td>
+											<td class="logoutBarRight"><img id="ajaxmark" src="../themes/default/images/progressbar.gif" align="center" style="visibility: hidden;" alt="ajaxmark"></td>
 											<td class="logoutBarRight">
-												<a href="./admin/dashboard.php?sel_app=orders"><img src="./themes/default/images/report.png" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Dashboard">&nbsp;&nbsp;Dashboard</a>&nbsp;&nbsp;&nbsp;
-												<a class="shortcut" href="./admin/display_prefs.php?"><img src="./themes/default/images/preferences.gif" style="width:14px;height:14px; border:0;vertical-align:middle;" alt="Preferences">&nbsp;&nbsp;Preferences</a>&nbsp;&nbsp;&nbsp;
-												<a class="shortcut" href="./admin/change_current_user_password.php?selected_id=admin"><img src="./themes/default/images/lock.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Change Password">&nbsp;&nbsp;Change password</a>&nbsp;&nbsp;&nbsp;
-												<a target="_blank" onclick="javascript:openWindow(this.href,this.target); return false;" href="http://frontaccounting.com/fawiki/index.php?n=Help.Sales&amp;ctxhelp=1&amp;lang=C"><img src="./themes/default/images/help.gif" style="width:14px;height:14px;border:0;vertical-align:middle; alt="Help">&nbsp;&nbsp;Help</a>&nbsp;&nbsp;&nbsp;<a class="shortcut" href="./access/logout.php?"><img src="./themes/default/images/login.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Logout">&nbsp;&nbsp;Logout</a>&nbsp;&nbsp;&nbsp;
+												<a class="shortcut" href="./admin/change_current_user_password.php?selected_id=admin"><img src="../themes/default/images/lock.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Change Password">&nbsp;&nbsp;Change password</a>&nbsp;&nbsp;&nbsp;
+												<a class="shortcut" href="../access/logout.php?"><img src="../themes/default/images/login.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Logout">&nbsp;&nbsp;Logout</a>&nbsp;&nbsp;&nbsp;
 											</td>
 										</tr>
 										<tr>
@@ -422,46 +543,13 @@ echo "<body>\n";
 					echo '<tbody>';
 						echo '<tr valign="top">';
 							echo '<td width="30%">';
-								echo '<table class="repclass" id="TAB_0" cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr><td>
-									<center><table class="tablestyle" cellpadding="2" cellspacing="0">
-										<tbody>
-											<tr>
-												<td class="tableheader">No</td>
-												<td class="tableheader">Pool Type</td>
-												<td class="tableheader"></td>
-												<td class="tableheader"></td>
-												<td class="tableheader"></td>
-											</tr>
-											<tr class="evenrow">
-												<td>1</td>
-												<td>Equipment</td>
-												<td align="center"><button type="" class="editbutton" name="" value="1" title="Edit"><img src="./themes/default/images/edit.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>
-												<td align="center"><button type="" class="editbutton" name="" value="1" title="Delete"><img src="./themes/default/images/delete.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>
-												<td align="center"><button type="" class="editbutton" name="" value="1" title="Show"><img src="./themes/default/images/invoice.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>
-											</tr>
-											<tr class="oddrow">
-												<td>2</td>
-												<td>Manufacturing</td>
-												<td align="center"><button type="" class="editbutton" name="" value="1" title="Edit"><img src="./themes/default/images/edit.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>
-												<td align="center"><button type="" class="editbutton" name="" value="1" title="Delete"><img src="./themes/default/images/delete.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>
-												<td align="center"><button type="" class="editbutton" name="" value="1" title="Show"><img src="./themes/default/images/invoice.gif" style="vertical-align:middle;width:12px;height:12px;border:0;"></button></td>
-											</tr>
-										</tbody>
-									</table></center>
-									<center><span></span></center>
-									<center><table class="tablestyle2" cellpadding="2" cellspacing="0">
-										<tbody>
-											<tr>
-												<td class="label">Pool Type :</td>
-												<td><input type="text" name="name" size="20" maxlength="20" value=""></td>
-											</tr>
-										</tbody>
-									</table></center>
-									<br>
-									<center>
-										<button class="inputsubmit" type="" aspect="default nonajax process" name="" id="" value="Add new"><img src="./themes/default/images/ok.gif" height="12" alt=""><span>Add new</span></button>
-									</center>
-								</td></tr></tbody></table>';
+								echo '<table class="repclass" id="TAB_0" cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr><td>';
+									start_form();	
+									display_pool_type();
+									echo '<br>';
+									display_pool_type_edit($_POST['edit_pool_type_id']);
+									end_form();
+								echo '</td></tr></tbody></table>';
 							echo '</td>';
 							echo '<td width="70%" style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;padding-left:3px;">';
 								echo '<table class="repclass" id="TAB_0" cellpadding="0" cellspacing="0" border="0" width="100%">';

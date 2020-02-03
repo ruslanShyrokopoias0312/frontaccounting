@@ -534,7 +534,6 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 				'post' => $_POST);
 
 			include($path_to_root . "/access/login.php");
-			//include($path_to_root . "/pool/setup.php");
 			if (in_ajax())
 				$Ajax->activate('_page_body');
 			exit;
@@ -548,8 +547,10 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 					}
 				}
 			}
-			$succeed = isset($db_connections[$_POST["company_login_name"]]) &&
-				$_SESSION["wa_current_user"]->login($_POST["company_login_name"],
+			// $succeed = isset($db_connections[$_POST["company_login_name"]]) &&
+			// 	$_SESSION["wa_current_user"]->login($_POST["company_login_name"],
+			// 	$_POST["user_name_entry_field"], $_POST["password"]);
+			$succeed = $_SESSION["wa_current_user"]->login($_POST["company_login_name"],
 				$_POST["user_name_entry_field"], $_POST["password"]);
 			// select full vs fallback ui mode on login
 			$_SESSION["wa_current_user"]->ui_mode = $_POST['ui_mode'];
@@ -570,7 +571,22 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 			$lang->set_language($_SESSION['language']->code);
 		}
 	} else
-	{ 
+	{
+		if (isset($_POST['company_index'])) {
+			$_SESSION["wa_current_user"]->set_company($_POST['company_index']);
+			$_SESSION["wa_current_user"]->cur_con = $_POST['company_index'];
+			header("Location: ../index.php");
+			exit;
+		}
+
+		if(!isset($_SESSION["wa_current_user"]->cur_con)){
+			$file_name = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
+			if ($file_name != "pool-setup.php") {
+				header("Location: ./pool/pool-setup.php");
+				exit;	
+			}		
+		}
+		
 		set_global_connection();
 
 		if (db_fixed())
