@@ -51,8 +51,8 @@
 			{
 				echo "<table cellpadding='0' cellspacing='0' width='100%'><tr><td>";
 				echo "<div class='tabs'>";
-				echo "<a class='menu_tab' href='#'>Cooperative</a>";
 				echo "<a class='selected' href='#'>ERP</a>";
+				echo "<a class='menu_tab' href='$path_to_root/pool/member.php'>Cooperative</a>";
 				echo "</div>";
 				echo "</td></tr></table>";
 			}

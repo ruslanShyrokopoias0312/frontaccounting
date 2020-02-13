@@ -510,8 +510,8 @@ echo "<body>\n";
 								<table cellpadding="0" cellspacing="0" width="100%">
 									<tbody><tr><td>
 										<div class="tabs" style="height:18.4px">
-											<a class="selected" href="./pool-setup.php"><u>P</u>ool Setup</a>
-											<a class="menu_tab" href="./user-setup.php"><u>U</u>ser Setup</a>
+											<a class="menu_tab" href="./pool-setup.php"><u>P</u>ool Setup</a>
+											<a class="selected" href="./user-setup.php"><u>U</u>ser Setup</a>
 										</div>
 									</td></tr></tbody>
 								</table>
@@ -520,7 +520,7 @@ echo "<body>\n";
 										<tr>
 											<td class="logoutBarRight"><img id="ajaxmark" src="../themes/default/images/progressbar.gif" align="center" style="visibility: hidden;" alt="ajaxmark"></td>
 											<td class="logoutBarRight">
-												<a class="shortcut" href="../admin/change_current_user_password.php?selected_id=admin"><img src="../themes/default/images/lock.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Change Password">&nbsp;&nbsp;Change password</a>&nbsp;&nbsp;&nbsp;
+												<a class="shortcut" href="./admin/change_current_user_password.php?selected_id=admin"><img src="../themes/default/images/lock.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Change Password">&nbsp;&nbsp;Change password</a>&nbsp;&nbsp;&nbsp;
 												<a class="shortcut" href="../access/logout.php?"><img src="../themes/default/images/login.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Logout">&nbsp;&nbsp;Logout</a>&nbsp;&nbsp;&nbsp;
 											</td>
 										</tr>
@@ -539,36 +539,131 @@ echo "<body>\n";
 			div_start('_page_body');
 				br();br();
 				
-				echo '<table align="center" width="80%" style="border:1px solid #cccccc;">';
-					echo '<tbody>';
-						echo '<tr valign="top">';
-							echo '<td width="30%">';
-								echo '<table class="repclass" id="TAB_0" cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr><td>';
-									start_form();	
-									display_pool_type();
-									echo '<br>';
-									display_pool_type_edit($_POST['edit_pool_type_id']);
-									end_form();
-								echo '</td></tr></tbody></table>';
-							echo '</td>';
-							echo '<td width="70%" style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;padding-left:3px;">';
-								echo '<table class="repclass" id="TAB_0" cellpadding="0" cellspacing="0" border="0" width="100%">';
-									echo '<tbody>';
-										echo '<tr>';
-											echo '<td>';
-												start_form();
-													display_companies();
-													display_company_edit($selected_id);
-													submit_add_or_update_center($selected_id == -1, '', 'upgrade');
-												end_form();
-											echo '</td>';
-										echo '</tr>';
-									echo '</tbody>';
-								echo '</table>';
-							echo '</td>';
-						echo '</tr>';
-					echo '</tbody>';
-				echo '</table>';
+				echo '<table align="center" width="80%" style="border:1px solid #cccccc;"><tbody><tr valign="top"><td width="50%">
+
+                <h3>Cooper Members</h3>
+            
+            <form method="post" action="">
+            <center><table class="tablestyle" cellpadding="2" cellspacing="0">
+            <tbody><tr>
+            <td class="tableheader">User login</td>
+            <td class="tableheader">Full Name</td>
+            <td class="tableheader">Phone</td>
+            <td class="tableheader">E-mail</td>
+            
+            
+            <td class="tableheader"></td>
+            <td class="tableheader"></td>
+            </tr>
+            <tr class="evenrow">
+            <td>member1</td>
+            <td>Rob Baker</td>
+            <td>1234567890</td>
+            <td><a href="mailto:adm@example.com">adm@example.com</a></td>
+            
+            
+            <td align="center"><button type="" class="editbutton" name="Edit1" value="1" title="Edit"><img src="../themes/default/images/edit.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+            </button>
+            </td><td align="center"><button type="" class="editbutton" name="Delete2" value="1" title="Delete"><img src="../themes/default/images/delete.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+            </button>
+            </td>
+            </tr>
+            <tr class="oddrow">
+            <td>member2</td>
+            <td>Charlie Jones</td>
+            <td>1344576788765</td>
+            <td><a href="mailto:">aaa@gmail.com</a></td>
+            
+            
+            <td align="center"><button type="" class="editbutton" name="Edit2" value="1" title="Edit"><img src="../themes/default/images/edit.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+            </button>
+            </td><td align="center"><button type="" class="editbutton" name="Delete2" value="1" title="Delete"><img src="../themes/default/images/delete.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+            </button>
+            </td></tr>
+            <tr><td colspan="8"><div style="float:left;"><input type="checkbox" name="show_inactive" value="1" onclick="JsHttpRequest.request(&quot;_show_inactive_update&quot;, this.form);">
+            Show also Inactive</div><div style="float:right;"><button class="inputsubmit" type="submit" style="display:none;" name="Update" id="Update" value="Update"><span>Update</span></button>
+            </div></td></tr></tbody></table></center>
+            <br><center><table class="tablestyle2" cellpadding="2" cellspacing="0">
+            <tbody><tr><td class="label">User Login:</td><td><input type="text" name="user_id" size="22" maxlength="20" value=""></td>
+            </tr>
+            <tr><td class="label">Password:</td><td><input type="password" name="password" size="20" maxlength="20" value=""></td>
+            </tr>
+            <tr><td class="label">Full Name:</td><td><input type="text" name="real_name" size="40" maxlength="50" value=""></td>
+            </tr>
+            <tr><td class="label">Telephone No.:</td><td><input type="text" name="phone" size="30" maxlength="30" value=""></td>
+            </tr>
+            <tr><td class="label">Email Address:</td><td><input type="text" name="email" size="40" maxlength="50" value=""></td>
+            </tr>
+            
+            
+            
+            
+            
+            </tbody></table></center>
+            <br><center><button class="ajaxsubmit" type="" aspect="default" name="ADD_ITEM" id="ADD_ITEM" value="Add new"><img src="../themes/default/images/ok.gif" height="12" alt=""><span>Add new</span></button>
+            </center><input type="hidden" name="_focus" value="user_id"><input type="hidden" name="_modified" value="0"><input type="hidden" name="_confirmed" value=""><input type="hidden" name="_token" value="jvKLw-SScMrY_bhbYHXSkQxx"></form>
+            </td><td width="50%" style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;padding-left:3px;">
+                <h3>Cooper Employees</h3>
+            <form method="post" action="">
+            <center><table class="tablestyle" cellpadding="2" cellspacing="0">
+            <tbody><tr>
+            <td class="tableheader">User login</td>
+            <td class="tableheader">Full Name</td>
+            <td class="tableheader">Phone</td>
+            <td class="tableheader">E-mail</td>
+            
+            
+            <td class="tableheader"></td>
+            <td class="tableheader"></td>
+            </tr>
+            <tr class="evenrow">
+            <td>employee1</td>
+            <td>aaa bbb</td>
+            <td>1234567890</td>
+            <td><a href="mailto:adm@example.com">adm@example.com</a></td>
+            
+            
+            <td align="center"><button type="" class="editbutton" name="Edit1" value="1" title="Edit"><img src="../themes/default/images/edit.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+            </button>
+            </td><td align="center"><button type="" class="editbutton" name="Delete2" value="1" title="Delete"><img src="../themes/default/images/delete.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+            </button>
+            </td>
+            </tr>
+            <tr class="oddrow">
+            <td>employee2</td>
+            <td>ccc ddd</td>
+            <td>1344576788765</td>
+            <td><a href="mailto:">aaa@gmail.com</a></td>
+            
+            
+            <td align="center"><button type="" class="editbutton" name="Edit2" value="1" title="Edit"><img src="../themes/default/images/edit.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+            </button>
+            </td><td align="center"><button type="" class="editbutton" name="Delete2" value="1" title="Delete"><img src="../themes/default/images/delete.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+            </button>
+            </td></tr>
+            <tr><td colspan="8"><div style="float:left;"><input type="checkbox" name="show_inactive" value="1" onclick="JsHttpRequest.request(&quot;_show_inactive_update&quot;, this.form);">
+            Show also Inactive</div><div style="float:right;"><button class="inputsubmit" type="submit" style="display:none;" name="Update" id="Update" value="Update"><span>Update</span></button>
+            </div></td></tr></tbody></table></center>
+            <br><center><table class="tablestyle2" cellpadding="2" cellspacing="0">
+            <tbody><tr><td class="label">User Login:</td><td><input type="text" name="user_id" size="22" maxlength="20" value=""></td>
+            </tr>
+            <tr><td class="label">Password:</td><td><input type="password" name="password" size="20" maxlength="20" value=""></td>
+            </tr>
+            <tr><td class="label">Full Name:</td><td><input type="text" name="real_name" size="40" maxlength="50" value=""></td>
+            </tr>
+            <tr><td class="label">Telephone No.:</td><td><input type="text" name="phone" size="30" maxlength="30" value=""></td>
+            </tr>
+            <tr><td class="label">Email Address:</td><td><input type="text" name="email" size="40" maxlength="50" value=""></td>
+            </tr>
+            
+            
+            
+            
+            
+            </tbody></table></center>
+            <br><center><button class="ajaxsubmit" type="" aspect="default" name="ADD_ITEM" id="ADD_ITEM" value="Add new"><img src="../themes/default/images/ok.gif" height="12" alt=""><span>Add new</span></button>
+            </center><input type="hidden" name="_focus" value="user_id"><input type="hidden" name="_modified" value="0"><input type="hidden" name="_confirmed" value=""><input type="hidden" name="_token" value="jvKLw-SScMrY_bhbYHXSkQxx"></form>
+            </td></tr></tbody></table>';
 
 				br();br();
 			div_end();

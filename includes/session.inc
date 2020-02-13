@@ -575,14 +575,14 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 		if (isset($_POST['company_index'])) {
 			$_SESSION["wa_current_user"]->set_company($_POST['company_index']);
 			$_SESSION["wa_current_user"]->cur_con = $_POST['company_index'];
-			header("Location: ../index.php");
+			header("Location:".$path_to_root."/index.php");
 			exit;
 		}
 
 		if(!isset($_SESSION["wa_current_user"]->cur_con)){
 			$file_name = basename($_SERVER['REQUEST_URI'], '?' . $_SERVER['QUERY_STRING']);
-			if ($file_name != "pool-setup.php") {
-				header("Location: ./pool/pool-setup.php");
+			if ($file_name != "pool-setup.php" && $file_name != "user-setup.php") {
+				header("Location:".$path_to_root."/pool/pool-setup.php");
 				exit;	
 			}		
 		}

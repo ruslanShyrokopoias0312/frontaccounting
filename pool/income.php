@@ -510,8 +510,19 @@ echo "<body>\n";
 								<table cellpadding="0" cellspacing="0" width="100%">
 									<tbody><tr><td>
 										<div class="tabs" style="height:18.4px">
-											<a class="selected" href="./pool-setup.php"><u>P</u>ool Setup</a>
-											<a class="menu_tab" href="./user-setup.php"><u>U</u>ser Setup</a>
+											<a class="menu_tab" href="../index.php">ERP</a>
+											<a class="selected" href="./member.php">Cooperative</a>
+										</div>
+									</td></tr></tbody>
+                                </table>
+                                <table cellpadding="0" cellspacing="0" width="100%">
+									<tbody><tr><td>
+										<div class="tabs" style="height:18.4px">
+											<a class="menu_tab" href="./member.php">Member</a>
+                                            <a class="menu_tab" href="./funding.php">Funding</a>
+                                            <a class="selected" href="./income.php">Income Split</a>
+                                            <a class="menu_tab" href="./expense.php">Expenses Split</a>
+                                            <a class="menu_tab" href="./agreement.php">Agreements</a>
 										</div>
 									</td></tr></tbody>
 								</table>
@@ -520,7 +531,8 @@ echo "<body>\n";
 										<tr>
 											<td class="logoutBarRight"><img id="ajaxmark" src="../themes/default/images/progressbar.gif" align="center" style="visibility: hidden;" alt="ajaxmark"></td>
 											<td class="logoutBarRight">
-												<a class="shortcut" href="../admin/change_current_user_password.php?selected_id=admin"><img src="../themes/default/images/lock.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Change Password">&nbsp;&nbsp;Change password</a>&nbsp;&nbsp;&nbsp;
+                                                <a class="shortcut" href="../admin/change_current_user_password.php?selected_id=admin"><img src="../themes/default/images/lock.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Change Password">&nbsp;&nbsp;Change password</a>&nbsp;&nbsp;&nbsp;
+                                                <a class="shortcut" href="../pool/pool-setup.php?"><img src="../themes/default/images/menu_system.png" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Pool Setup">&nbsp;&nbsp;Pool Setup</a>
 												<a class="shortcut" href="../access/logout.php?"><img src="../themes/default/images/login.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Logout">&nbsp;&nbsp;Logout</a>&nbsp;&nbsp;&nbsp;
 											</td>
 										</tr>
@@ -534,41 +546,77 @@ echo "<body>\n";
 						</tr>
 					</tbody>
 				</table>';
-			echo "<Center><table class='titletext'><tr><td>Pool Setup</td></tr></table></Center>\n";
+			echo "<Center><table class='titletext'><tr><td>Income Split</td></tr></table></Center>\n";
 			echo '<div id="msgbox"></div>';
 			div_start('_page_body');
 				br();br();
 				
-				echo '<table align="center" width="80%" style="border:1px solid #cccccc;">';
-					echo '<tbody>';
-						echo '<tr valign="top">';
-							echo '<td width="30%">';
-								echo '<table class="repclass" id="TAB_0" cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr><td>';
-									start_form();	
-									display_pool_type();
-									echo '<br>';
-									display_pool_type_edit($_POST['edit_pool_type_id']);
-									end_form();
-								echo '</td></tr></tbody></table>';
-							echo '</td>';
-							echo '<td width="70%" style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;padding-left:3px;">';
-								echo '<table class="repclass" id="TAB_0" cellpadding="0" cellspacing="0" border="0" width="100%">';
-									echo '<tbody>';
-										echo '<tr>';
-											echo '<td>';
-												start_form();
-													display_companies();
-													display_company_edit($selected_id);
-													submit_add_or_update_center($selected_id == -1, '', 'upgrade');
-												end_form();
-											echo '</td>';
-										echo '</tr>';
-									echo '</tbody>';
-								echo '</table>';
-							echo '</td>';
-						echo '</tr>';
-					echo '</tbody>';
-				echo '</table>';
+				echo '<table align="center" width="80%" style="border:1px solid #cccccc;"><tbody><tr valign="top"><td width="30%"><b>Offering:</b><br><br><a href="" style="font-weight: bold;" class="repclass_link" id="class0">-Kitchen hire</a> <br> <a href="" style="font-weight:normal" class="repclass_link" id="class2">-food sales</a>      </td><td width="70%" style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;padding-left:3px;">
+                <form method="post" action="">
+                                <center><table class="tablestyle" cellpadding="2" cellspacing="0">
+                                <tbody><tr>
+                                <td class="tableheader">User login</td>
+                                <td class="tableheader">Full Name</td>
+                                <td class="tableheader">Portion</td>
+                                
+                                
+                                
+                <td class="tableheader">Date</td>
+                                <td class="tableheader"></td>
+                                <td class="tableheader"></td>
+                                </tr>
+                                <tr class="evenrow">
+                                <td>member 1</td>
+                                <td>Rob Baker</td>
+                                <td>%20</td>
+                                
+                                
+                                <td>02/13/2020 07:58 am</td>
+                                <td align="center"><button type="" class="editbutton" name="Edit1" value="1" title="Edit"><img src="../themes/default/images/edit.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+                                </button>
+                                </td><td align="center"><button type="" class="editbutton" name="Delete2" value="1" title="Delete"><img src="../themes/default/images/delete.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+                                </button>
+                                </td>
+                                </tr>
+                                <tr class="oddrow">
+                                <td>member 2</td>
+                                <td>Charlie Jones</td>
+                                <td>%80</td>
+                                
+                                
+                                <td>01/28/2020 05:15 am</td>
+                                <td align="center"><button type="" class="editbutton" name="Edit2" value="1" title="Edit"><img src="../themes/default/images/edit.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+                                </button>
+                                </td><td align="center"><button type="" class="editbutton" name="Delete2" value="1" title="Delete"><img src="../themes/default/images/delete.gif" style="vertical-align:middle;width:12px;height:12px;border:0;">
+                                </button>
+                                </td></tr>
+                                </tbody></table></center>
+                                <br><center><table class="tablestyle2" cellpadding="2" cellspacing="0">
+                                <tbody><tr><td class="label">User Login:</td><td><span id="_role_id_sel"><select id="role_id" autocomplete="off" name="role_id" class="combo" title="" _last="0">
+                                <option value="1">member 1</option>
+                                <option value="9">member 2</option>
+                                <option value="5">member 3</option>
+                                <option value="6">member 4</option>
+                                <option value="3">member 5</option>
+                                </select>
+                                </span>
+                                </td>
+                                </tr>
+                                
+                                
+                                
+                                
+                                <tr><td class="label">Portion:</td><td><input type="text" name="phone" size="30" maxlength="30" value="%20">
+                                </td>
+                                </tr>
+                                
+                                
+                                
+                                
+                                </tbody></table></center>
+                                <br><center><button class="ajaxsubmit" type="" aspect="default" name="ADD_ITEM" id="ADD_ITEM" value="Add new"><img src="../themes/default/images/ok.gif" height="12" alt=""><span>Add new</span></button>
+                                </center><input type="hidden" name="_focus" value="user_id"><input type="hidden" name="_modified" value="0"><input type="hidden" name="_confirmed" value=""><input type="hidden" name="_token" value="-rdxAwawFZAa-4VTBk3wgwxx"></form>
+                </td></tr></tbody></table>';
 
 				br();br();
 			div_end();

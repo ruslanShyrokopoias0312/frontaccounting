@@ -510,8 +510,19 @@ echo "<body>\n";
 								<table cellpadding="0" cellspacing="0" width="100%">
 									<tbody><tr><td>
 										<div class="tabs" style="height:18.4px">
-											<a class="selected" href="./pool-setup.php"><u>P</u>ool Setup</a>
-											<a class="menu_tab" href="./user-setup.php"><u>U</u>ser Setup</a>
+											<a class="menu_tab" href="../index.php">ERP</a>
+											<a class="selected" href="./member.php">Cooperative</a>
+										</div>
+									</td></tr></tbody>
+                                </table>
+                                <table cellpadding="0" cellspacing="0" width="100%">
+									<tbody><tr><td>
+										<div class="tabs" style="height:18.4px">
+											<a class="menu_tab" href="./member.php">Member</a>
+                                            <a class="menu_tab" href="./funding.php">Funding</a>
+                                            <a class="menu_tab" href="./income.php">Income Split</a>
+                                            <a class="menu_tab" href="./expense.php">Expenses Split</a>
+                                            <a class="selected" href="./agreement.php">Agreements</a>
 										</div>
 									</td></tr></tbody>
 								</table>
@@ -520,7 +531,8 @@ echo "<body>\n";
 										<tr>
 											<td class="logoutBarRight"><img id="ajaxmark" src="../themes/default/images/progressbar.gif" align="center" style="visibility: hidden;" alt="ajaxmark"></td>
 											<td class="logoutBarRight">
-												<a class="shortcut" href="../admin/change_current_user_password.php?selected_id=admin"><img src="../themes/default/images/lock.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Change Password">&nbsp;&nbsp;Change password</a>&nbsp;&nbsp;&nbsp;
+                                                <a class="shortcut" href="../admin/change_current_user_password.php?selected_id=admin"><img src="../themes/default/images/lock.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Change Password">&nbsp;&nbsp;Change password</a>&nbsp;&nbsp;&nbsp;
+                                                <a class="shortcut" href="../pool/pool-setup.php?"><img src="../themes/default/images/menu_system.png" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Pool Setup">&nbsp;&nbsp;Pool Setup</a>
 												<a class="shortcut" href="../access/logout.php?"><img src="../themes/default/images/login.gif" style="width:14px;height:14px;border:0;vertical-align:middle;" alt="Logout">&nbsp;&nbsp;Logout</a>&nbsp;&nbsp;&nbsp;
 											</td>
 										</tr>
@@ -534,41 +546,12 @@ echo "<body>\n";
 						</tr>
 					</tbody>
 				</table>';
-			echo "<Center><table class='titletext'><tr><td>Pool Setup</td></tr></table></Center>\n";
+			echo "<Center><table class='titletext'><tr><td>Agreements</td></tr></table></Center>\n";
 			echo '<div id="msgbox"></div>';
 			div_start('_page_body');
 				br();br();
 				
-				echo '<table align="center" width="80%" style="border:1px solid #cccccc;">';
-					echo '<tbody>';
-						echo '<tr valign="top">';
-							echo '<td width="30%">';
-								echo '<table class="repclass" id="TAB_0" cellpadding="0" cellspacing="0" border="0" width="100%"><tbody><tr><td>';
-									start_form();	
-									display_pool_type();
-									echo '<br>';
-									display_pool_type_edit($_POST['edit_pool_type_id']);
-									end_form();
-								echo '</td></tr></tbody></table>';
-							echo '</td>';
-							echo '<td width="70%" style="border-left:1px solid #cccccc;border-right:1px solid #cccccc;padding-left:3px;">';
-								echo '<table class="repclass" id="TAB_0" cellpadding="0" cellspacing="0" border="0" width="100%">';
-									echo '<tbody>';
-										echo '<tr>';
-											echo '<td>';
-												start_form();
-													display_companies();
-													display_company_edit($selected_id);
-													submit_add_or_update_center($selected_id == -1, '', 'upgrade');
-												end_form();
-											echo '</td>';
-										echo '</tr>';
-									echo '</tbody>';
-								echo '</table>';
-							echo '</td>';
-						echo '</tr>';
-					echo '</tbody>';
-				echo '</table>';
+				
 
 				br();br();
 			div_end();
